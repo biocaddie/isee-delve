@@ -12,7 +12,18 @@ def home(request):
 def generate_elastic():
     es = Elasticsearch([{'host': '10.0.0.10', 'port': 9200}], timeout=600, index='pubmed')
     return es
+
+def get_index():
+    """the elasticsearch index"""
+    return "pubmed"
+
+def get_type():
+    """the elasticsearch type"""
+    return "aim-core"
     
+def do_search(es, query):
+	return es.search(index=get_index(), doc_type=get_type(), body=query)
+	
 def get_distance_angle(vec1, vec2):
     """
     Takes 2 vectors vec1 and vec2, calculates cosine similarity and thus angle, and then eculedian distance.
@@ -241,7 +252,7 @@ def send_relevant_facets(request):
         query = process_post[0]
 
         try:         
-            res = es.search(index="pubmed", doc_type="aim-core", body=query)
+            res = do_search(es, query)
         except:
             response_dict = {"Error" : {"facets": [{'name': 'Code Error', 'count' : 0 , 'selected': 0}]}}
         else:
@@ -297,7 +308,7 @@ def send_keywords(request):
         process_post = get_final_query('keyword_cloud', request)
         query = process_post[0]
         try:         
-            res = es.search(index="pubmed", doc_type="aim-core", body=query)
+            res = do_search(es, query)
         except:
             response_dict = [{"text" : "Error" , "size" : 3, "ids" : []}]
         else:
@@ -334,7 +345,7 @@ def generate_facets(request):
         selected_filters = process_post[1]
         
         try:         
-            res = es.search(index="pubmed", doc_type="aim-core", body=query, search_type="count")
+            res = es.search(index=get_index(), doc_type=get_type(), body=query, search_type="count")
         except:
             response_dict = {"Error" : {"facets": [{'key_name': 'Error', 'field': 'abstrasct', 'type': 'terms', 'name': 'Code Error', 'count' : 0 , 'selected': 0}]}}
         else:
@@ -392,7 +403,7 @@ def document_graph(request):
         process_post = get_final_query('document_matrix', request)
         query = process_post[0]
         try:         
-            res = es.search(index="pubmed", doc_type="aim-core", body=query)
+            res = do_search(es, query)
         except:
             response_dict = {'top_doc' : '0', 'doc_matrix' : [], 'max_dis' : 0}
         else:
@@ -435,7 +446,7 @@ def search_query(request):
         except:
             response_dict = {1: {'_source' : {'pmid' : '0', 'title' : 'There was error in the system', 'journal_title' : '', 'year': '', 'journal_volume' : '', 'journal_issue' : '', 'jounral_page' : '', 'article_type' : [], 'mesh' : [], 'abstract' : 'Please try again. If error persists, contact the website administrator'}}}
         else:
-            res = es.search(index="pubmed", doc_type="aim-core",  body=query)
+            res = do_search(es, query)
             i = 1
             response_dict = {'total_hits': res['hits']['total'], 'pageno': pageno, 'results': {}}
             for hit in res['hits']['hits']:
@@ -450,7 +461,6 @@ def search_query(request):
 @csrf_exempt        
 def document_list(request):
     if (request.method == "POST"):
-
         field_name = request.POST.get('field-type')
         index_list = json.loads(request.POST.get('id-list'))
 
@@ -462,7 +472,7 @@ def document_list(request):
         else:
             i = 0
             for pmid in index_list:
-                res = es.get_source(index="pubmed", doc_type="aim-core", id=pmid, _source =['pmid', field_name])
+                res = es.get_source(index=get_index(), doc_type=get_type(), id=pmid, _source =['pmid', field_name])
                 response_dict[i] = res
                 i += 1
         if not response_dict:
@@ -483,7 +493,7 @@ def documents_like_this(request):
         except:
             response_dict = {1: {'_source' : {'pmid' : '0', 'title' : 'There was error in the system', 'journal_title' : '', 'year': '', 'journal_volume' : '', 'journal_issue' : '', 'jounral_page' : '', 'article_type' : [], 'mesh' : [], 'abstract' : 'Please try again. If error persists, contact the website administrator'}}}
         else:
-            res = es.search(index="pubmed", doc_type="aim-core",  body=query)
+            res = do_search(es, query)
             i = 1
             response_dict = {'total_hits': res['hits']['total'], 'pageno': pageno, 'results': {}}
             for hit in res['hits']['hits']:
