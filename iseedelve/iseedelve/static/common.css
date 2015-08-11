@@ -81,7 +81,7 @@ The design is for minimum 1366 x 768
 #logo-box {
 	float: left;
 	padding: 5px;
-	background: #4d4f53;
+	background: white;
 }
 
 #title-box {
