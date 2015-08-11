@@ -17,7 +17,7 @@ Pilot Project - Visualization of search results
 
 ###Search Index:
 - Elasticsearch server 1.6
-Developed and Tested on Medline index of 1,118,632 documents from 'Abridged Index Medicus (AIM or "Core Clinical") Journal Titles' by excluding all documents without an abstract.
+- Documents: Medline index of 1,118,632 documents from 'Abridged Index Medicus (AIM or "Core Clinical") Journal Titles' by excluding all documents without an abstract.
 ```
 "mappings" : {
       "aim-core" : {
