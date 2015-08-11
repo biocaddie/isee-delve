@@ -4,19 +4,19 @@ Pilot Project - Visualization of search results
 #Setup
 
 ###Server Side:
-Pytyhon3.4 (with Numpy and Scipy modules)
-Django 1.7
+- Pytyhon3.4 (with Numpy and Scipy modules)
+- Django 1.7
 
 ###Client Side:
-HTML5
-Jquery 1.11.2
-Jquery-Ui
-Jquery-Ui-contextmenu
-D3
-D3.layoud.cloud
+- HTML5
+- Jquery 1.11.2
+- Jquery-Ui
+- Jquery-Ui-contextmenu
+- D3
+- D3.layoud.cloud
 
 ###Search Index:
-Elasticsearch server 1.6
+- Elasticsearch server 1.6
 Developed and Tested on Medline index of 1,118,632 documents from 'Abridged Index Medicus (AIM or "Core Clinical") Journal Titles' by excluding all documents without an abstract.
 ```
 "mappings" : {
