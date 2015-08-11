@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+{% include "header-javascript.html" %}
+<link rel="stylesheet" href="/static/search.css">
+</head>
+<body>
+{% include "header.html" %}
+<!-- Main Body - Split into three sections -->
+<div id="main-body">
+	<!-- Facets Region -->
+	<!-- Margin-2.5px Width: 22% -->
+	<div id="facet-box">
+		&nbsp;&nbsp;
+	</div>
+	<!-- Innter Box - Contains the search filter area in top and split regions for display of results and graphs below -->
+	<div id="inner-box">
+		<!-- Search Filter area - drag and drop listener -->
+		<!-- Width: 76% -->
+		<div id="search-filter">
+			<b>Search Filters</b><br>
+				<br>
+                        <div id="search-drop">
+                       <!--
+				<div class="filter-item">Keyword 1 <span class="del-button">x</span></div>
+				<div class="filter-item">Keyword 2 <span class="del-button">x</span></div>
+				<div class="filter-item">Keyword 3 <span class="del-button">x</span>
+				</div>
+                       -->
+                        </div>
+				<br><br>
+				<i>Drag and drop keywords, facets from the graphs</i><br>
+		</div>
+		<br>
+		<!-- Graph Results -->
+		<div id="graph-results">
+		<!-- Margin-2.5px Width: 76% -->
+			<!--Facets Trends -->
+			<div id="facet-trends">
+				<b>Relevant Facets</b><br>
+				<i>(sorted in order of relevance)</i><br>
+				<div id="facet-graph">
+                            A List of Facets that have high relvence to the search query and returned results.
+                       </div>
+			</div>
+			<!-- Keyword Cloud -->
+			<div id="keyword-cloud">
+				<b>Keyword Cloud</b><br>
+				<i>(relevant keywords from returned results)</i><br>
+				<div id="keyword-graph">
+                                <svg  xmlns="http://www.w3.org/2000/svg" id="svg-key" viewBox="0 0 400 400">
+                                </svg>
+                        </div>
+			</div>
+			<!-- Document Cluster -->
+			<div id="document-cluster">
+				<b>Document Cluster</b><br>
+				<i>(relationship of search results to the top most result)</i>
+				<div id="document-graph">
+                            <svg xmlns="http://www.w3.org/2000/svg" id="svg-obj" viewBox="0 0 400 400">
+                            </svg>
+                        </div>
+			</div>
+		</div>
+		<div id="clear-box">
+		</div>
+		<!-- Result box - only text results -->
+		<div id="result-box">
+			<!-- Text Results -->
+			<!-- Margin-2.5px Width: 76% -->
+			<div id="text-results">
+				<div id="top-most" class="highlight-top">
+					
+				</div>
+				<br>
+                       <div id="result-count">
+                       Total results : <span id="search-count"></span>
+                       </div>
+                       <br>
+				<div id="other-results" style="width:100%">&nbsp;&nbsp;
+					<div class="result-box">
+						
+					</div>
+				</div>
+				<!-- Pagination -->
+				<div id="pagination">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+    <div id="clear-box">
+	</div>
+</div>
+{% include "footer.html" %}
+<!-- Load Javascript -->
+{% include "footer-javascript.html" %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+/*
+Design - 1 : Graphs placed on top
+*/
+
+#text-results {
+	width: 100%;
+	min-width: 646px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#graph-results {
+	width: 100%;
+	min-width: 396px;
+}
+
+#facet-trends {
+	width: 33%;
+	min-width: 300px;
+	margin-right:2px;
+	margin-left:2px;
+	float:left;
+	background-color:#DEEDFF;
+}
+
+#keyword-cloud {
+	width: 33%;
+	min-width:300px;
+	margin-right:2px;
+	margin-left:2px;
+	float:left;
+	background-color:#DEEDFF;
+}
+
+#document-cluster {
+	width: 33%;
+	min-width:300px;
+	margin-right:2px;
+	margin-left:2px;
+	float:left;
+	background-color:#DEEDFF;
+}

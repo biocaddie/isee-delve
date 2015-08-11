@@ -1,0 +1,437 @@
+/*Main HTML */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.875em;
+}
+
+#clear-box {
+	clear:both;
+}
+
+/*
+Assign width and margin of the containers
+The design is for minimum 1366 x 768
+*/
+
+#header {
+	width: 100%;
+}
+
+#search-box {
+	padding: 10px;
+	float:left;
+	display: table-cell;
+      vertical-align: middle;
+	height: 80px;
+}
+
+#document-search-indication {
+	padding: 10px;
+	float:left;
+	display: none;
+      vertical-align: middle;
+      background-color:#ffee75; 
+}
+
+#main-body {
+	width: 100%;
+      position: relative;
+}
+
+#facet-box {
+	width: 22%;
+	min-width: 250px;
+	margin-right: 2.5px;
+	margin-left: 2.5px;
+	float:left;
+	background-color:#DEEDFF;
+}
+
+#inner-box {
+	width: 76%;
+	min-width: 1050px;
+	margin-right: 2.5px;
+	margin-left: 2.5px;
+	float:left;
+}
+
+#search-filter {
+	width: 100%;
+	background-color:#e5e5e5;
+	color: #666666;
+	padding:5px;
+}
+
+#result-box {
+	width: 100%;
+}
+
+#footer {
+	width: 100%;
+	text-align: center;
+	color: #ccc;
+	font-size: 0.7em;
+}
+
+
+/* Style Header */
+
+#logo-box {
+	float: left;
+	padding: 5px;
+	background: #4d4f53;
+}
+
+#title-box {
+	float: left;
+	padding: 5px;
+}
+
+/* Search Box */
+
+#search-form {
+	padding: 10px;
+}
+
+#search-wrapper {
+	position: relative;
+	overflow: visible;
+	margin-right: 10px;
+	float: left;
+	z-index:3;
+}
+
+#search-field {
+	width: 450px;
+	height: 36px;
+	font-size: 24px;
+}
+
+#search-button {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#search-suggestions {
+	position: absolute;
+	display:none;
+	z-index:3;
+	width: 200px;
+	height: 80px;
+	overflow-x:auto;
+	overflow-y:auto;
+	background-color: white;
+	box-shadow:2px 2px 3px #aaaaaa;
+}
+
+/*Ajax Box*/
+
+.miniloading {
+    width:200px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    color: black;
+}
+
+#ajax-status {
+    position: absolute;
+    display: none;
+    z-index: 10;
+    width: 100%;
+    height: inherit;
+    background-color: grey;
+    opacity: 0.95;
+    top:0px;
+    left: 0px;
+    color: black;
+}
+
+#ajax-animation {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+#ajax-message {
+    width:400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#ajax-welcome {
+    display: none;
+    background-color:white;
+    text-align:center;
+    
+}
+
+#ajax-working {
+    display: none;
+    background-color:white;
+    text-align:center;
+}
+
+#ajax-error {
+    display: none;
+    background-color:white;
+    text-align:center;
+}
+
+/*Facets */
+
+.facet-list {
+    list-style-type:none;
+    padding: 2px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+
+/* Drag-Drop Keywords */
+
+#search-drop {
+    min-height: 100px;
+}
+
+.filter-item {
+	line-height: 14px;
+	height: 14px;
+	color: #000000;
+	border: 2px solid grey;
+	padding: 6px;
+	text-align:center;
+	display:inline-block;
+	position:relative;
+}
+
+.del-button {
+	cursor: pointer;
+	color: red;
+	font-size: 0.875em;
+	height:auto;
+	font-weight:bold;
+	font-family:Monospace;
+	display:inline-block;
+	position: absolute;
+	right: 0px;
+	top: -4px;
+	}
+
+/* TExt Results */
+.highlight-top {
+	border: 2px solid #efc439;
+	background-color: #f9f9f9;
+	font-weight:bold;
+	padding: 2px;
+}
+
+.result-title {
+	font-size: 1.25em;
+}
+
+.result-url {
+	color: #009030;
+	text-decoration: none;
+}
+
+.result-box {
+	padding:5px;
+      margin: 2px;
+}
+
+.result-description {
+}
+
+.result-metadata {
+	color: #575757
+}
+
+/*Pagination*/
+
+.page-list {
+	list-style-type:none;
+}
+
+.page-digit {
+	line-height: 34px;
+	height: 34px;
+	text-align: center;
+	margin-right:10px;
+	min-width:34px;
+	display:inline-block;
+}
+
+.current-page {
+	border: 2px solid #ededed;
+}
+
+.page-links {
+	color: inherit;
+	text-decoration: none;
+      cursor: pointer;
+}
+
+/*Relevant Facets*/
+#facet-graph {
+    background-color: white;
+}
+
+#facet-cloud { 
+	margin:0; 
+	padding:0; 
+	overflow:hidden;
+     list-style-type:none;
+	}
+	
+#facet-cloud li {
+      margin:2px 2px 2px 2px;
+	cursor: pointer;
+	color:#000000;
+	}
+
+#facet-cloud li:hover {
+	text-decoration:underline;
+	}
+	
+.facetitem
+ {
+    border:none;
+ }
+
+.facetselect
+ {
+    border: 2px solid red;
+ }
+
+.facethighlight
+{ 
+    background-color: orange;
+}
+
+/*keyword cloud*/
+#keyword-graph {
+    background-color: white;
+}
+
+#svg-key {
+    background-color:white;
+    width:100%;
+}
+
+.keyitem
+ {
+    cursor: pointer;
+    fill: blue;
+ }
+
+.keyselect
+ {
+    fill: red;
+ }
+
+.treehighlight
+{
+  fill: orange;
+}
+
+.keyhighlight
+{ 
+ fill:orange;
+}
+
+/*Document Graph*/
+#document-graph {
+    background-color: white;
+}
+
+#svg-obj {
+    width: 100%;
+    background-color:white;
+}
+
+.cresult {
+	cursor: pointer;
+}
+
+.cselect {
+    stroke: blue;
+    stroke-width: 1;
+    fill: red;
+}
+
+.cdefault {
+    stroke: blue;
+    stroke-width: 1;
+    stroke-alignment: "inner";
+    fill: blue;
+}
+
+.chighlight {
+    fill: orange;
+}
+
+.ctext {
+    fill : white;
+    font-family: "Arial,Helvetica";
+    font-size:"15px";
+    font-weight="bold";
+}
+
+/*Item Context*/
+
+.ui-state-focus {margin: inherit !important}
+.ui-menu {
+     max-width: 600px;
+     min-width: 400px; 
+     color:#000000;
+      background-color: #FFFFFF;
+    }
+
+#item-context {
+    background:white;
+    position:absolute;
+    display:none; 
+    max-width: 600px;
+    min-width: 400px;
+    max-height: 400px;
+    color:#000000;
+}
+
+#item-context li {
+    padding: 2px 2px 2px 5px;
+    border: 1px solid #dddddd;
+    cursor:default;
+}
+
+#item-context li:hover {
+    background-color:none;
+}
+
+.menu-doc-list {
+    background-color:white;
+}
+
+.menu-doc-list:hover {
+    background-color:none;
+}
+
+.menu-doc-list li {
+    padding: 2px 2px 2px 2px;
+    border:none;
+}
+
+.menu-doc-list li:hover {
+    background-color: none;
+}
+
+.menu-links {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.menu-links:hover {
+    text-decoration: underline;
+}
