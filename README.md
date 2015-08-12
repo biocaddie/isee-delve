@@ -91,13 +91,12 @@ Pilot Project - Visualization of search results
       |_ /html
             |_/iseedelve
                   |_/iseedelve
-                  |     |_/iseedelve
-                  |           |_/media
-                  |           |_/static
-                  |           |_/template
-                  |           |_urls.py
-                  |           |_views.py
-                  |           |_wsgi.py
+                  |     |_/media
+                  |     |_/static
+                  |     |_/template
+                  |     |_urls.py
+                  |     |_views.py
+                  |     |_wsgi.py
                   |_manage.py
 ```
 - Update the settings.py file with the server settings
