@@ -1,5 +1,7 @@
 # isee-delve
-Pilot Project - Visualization of search results
+PP2.2 - Intelligent Search expansion and Visualization of Datasets (iSee-DELVE)
+
+This is the DELVE component (Visualization part) of the project.
 
 #Setup
 
