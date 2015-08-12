@@ -101,7 +101,7 @@ Pilot Project - Visualization of search results
 ```
 - Update the settings.py file with the server settings
 - Update the wsgi.py file with the server settings
-- Update the views.py file with teh elasticsearch index parameters
+- Update the views.py file with the elasticsearch index parameters
 
 # Elasticsearch node requirements
 
