@@ -89,6 +89,25 @@ The design is for minimum 1366 x 768
 	padding: 5px;
 }
 
+/*Style Footer */
+
+.biocaddie-footer {
+    margin: 0 auto;
+    width: 60%
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #58595b;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.biocaddie-links {
+    color: #009444;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 /* Search Box */
 
 #search-form {
