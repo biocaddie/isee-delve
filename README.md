@@ -19,71 +19,15 @@ This is the DELVE component (Visualization part) of the project.
 
 ###Search Index:
 - Elasticsearch server 1.6
-- Documents: Medline index of 1,118,632 documents from 'Abridged Index Medicus (AIM or "Core Clinical") Journal Titles' by excluding all documents without an abstract.
-```
-"mappings" : {
-      "aim-core" : {
-        "properties" : {
-          "abstract" : {
-            "type" : "string",
-            "store" : true,
-            "term_vector" : "with_positions_offsets"
-          },
-          "article_type" : {
-            "type" : "string",
-            "index" : "not_analyzed",
-            "store" : true
-          },
-          "journal_abbrev" : {
-            "type" : "string",
-            "index" : "not_analyzed",
-            "store" : true
-          },
-          "journal_issue" : {
-            "type" : "string",
-            "index" : "no",
-            "store" : true
-          },
-          "journal_page" : {
-            "type" : "string",
-            "index" : "no",
-            "store" : true
-          },
-          "journal_title" : {
-            "type" : "string",
-            "index" : "not_analyzed",
-            "store" : true
-          },
-          "journal_volume" : {
-            "type" : "string",
-            "index" : "no",
-            "store" : true
-          },
-          "mesh" : {
-            "type" : "string",
-            "index" : "not_analyzed",
-            "store" : true,
-            "position_offset_gap" : 100
-          },
-          "pmid" : {
-            "type" : "string",
-            "index" : "not_analyzed",
-            "store" : true
-          },
-          "title" : {
-            "type" : "string",
-            "store" : true,
-            "term_vector" : "with_positions_offsets"
-          },
-          "year" : {
-            "type" : "date",
-            "store" : true,
-            "format" : "YYYY"
-          }
-        }
-      }
-    }
-```
+- Tested on PDB index and Medline Index
+- PDB Index: As provided by UCSD team.=
+- Medline Index: Medline index of 1,118,632 documents from 'Abridged Index Medicus (AIM or "Core Clinical") Journal Titles' by excluding all documents without an abstract.
+- Mapping requirements
+-- One "string" type with "term_vector" : "with_position_offsets" - usually a field that has maxium text or create a field with merging multiple small fields. This is required for document graph generation
+-- Facets must be "string" type with "index" : "not_analyzed"
+-- Year / Date fields must not be "string" type. Use appropriate "date" format from elasticsearch
+-- "store" : "true" must be set for all fields, as the interface displays text directly from the elasticsearch (instead of querying a sepearate database)
+
 # Implementation - Things to do
 
 - The iseedelve folder has the django folder structure. Import the folder to http server root (such as /var/www/html/). After importing the folder structure must be like the following (not all folders and files are shown below)
@@ -101,9 +45,10 @@ This is the DELVE component (Visualization part) of the project.
                   |     |_wsgi.py
                   |_manage.py
 ```
+- Update the search.js file with the index settings
 - Update the settings.py file with the server settings
 - Update the wsgi.py file with the server settings
-- Update the views.py file with the elasticsearch index parameters
+- Update the views.py file with the elasticsearch index parameters and search fields
 
 # Elasticsearch node requirements
 
@@ -112,3 +57,7 @@ isee-devle interface requires at least
 - one string field that is not analyzed. This is used as facets
 
 Edit the appropriate query in the views.py to connect to the elasticsearch node. Any changes made to the processing of returned results in views.py file, must also be complemented in the search.js file.
+
+THe sample mapping of Medline and PDB index is uploaded.
+
+The current uploaded version (25-August-2015) will work with Medline and PDB index.
