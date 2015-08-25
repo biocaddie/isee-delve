@@ -75,7 +75,38 @@ The design is for minimum 1366 x 768
 	font-size: 0.7em;
 }
 
+/*UT Header */
+#utheader  {
+	width: 100%;
+}
 
+#uthealth-row1 {
+    line-height:45px;
+    background: #44697C;
+}
+
+#uthealth-row2 {
+    height:80px;
+    background: #4D4F53;
+    border-bottom: 5px solid #bd4f19;
+}
+
+#uthealth-logo {
+    top: -45px;
+    background-color: #4D4F53;
+    width: 23%;
+    height: 80px;
+    line-height: 90px;
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#uthealth-logo img {
+    display: inline-block;
+    vertical-align: middle;
+    }
 /* Style Header */
 
 #logo-box {
@@ -105,6 +136,25 @@ The design is for minimum 1366 x 768
 .biocaddie-links {
     color: #009444;
     font-weight: 600;
+    text-decoration: none;
+}
+
+.ut-footer {
+    padding: 15px;
+    width: 100%
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: rgb(50, 52, 57);
+    color: #ffffff;
+    margin: 10px auto 0px;
+    text-decoration: none;
+}
+
+.ut-footer a {
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -251,10 +301,25 @@ The design is for minimum 1366 x 768
 	font-size: 1.25em;
 }
 
-.result-url {
-	color: #009030;
+
+.result-links {
 	text-decoration: none;
 }
+
+.result-url {
+    color: #009030;
+}
+
+.result-sublinks {
+	color: #blue;
+      font-size: 1em;
+	text-decoration: none;
+}
+
+.result-subbox {
+     border: 1px solid #DEEDFF;
+     padding: 2px 2px 2px 5px;
+    }
 
 .result-box {
 	padding:5px;

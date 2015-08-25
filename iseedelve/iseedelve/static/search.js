@@ -3,6 +3,15 @@
 
 $(document).ready(function(){
     
+    //Get index_name from URL
+    path_array = window.location.pathname.split('/');
+    var index = path_array[1];
+    var index_name = path_array[1];
+	
+    //Define the index and index doc_types here
+    var doc_type_dict = {'pubmed': 'aim-core', 'pdb_v2' : 'pdb2' };
+    var doc_type = doc_type_dict[index];
+
     function show_loading() {
         html = "<div class='miniloading'><br><h3>Loading...</h3><br><img src ='../static/ajax_loading_mini.gif'><br><br></div><br>";
         return html;
@@ -18,6 +27,7 @@ $(document).ready(function(){
     
     function get_send_data(query, facets, dragdrop, pageno, search_type)
     {
+            
 		var send_data = new Object();
 			if (parseInt(search_type) == 2)
 			{
@@ -40,6 +50,8 @@ $(document).ready(function(){
 			}
 			send_data.pageno = pageno;
 			send_data.search_type = search_type;
+                 send_data.index = index;
+                 send_data.doc_type = doc_type_dict[index];
 		return send_data;
     }
 
@@ -47,29 +59,48 @@ $(document).ready(function(){
 	function display_document_list(data, class_name)
 	{
 		doc_list_html = '';
-		for (c in data)
-		{
-			doc_dict = data[c];
-			pmid = doc_dict['pmid'];
-			title = doc_dict['title'];
-			url_base = "http://ncbi.nlm.nih.gov/pubmed/"+pmid.toString();
-			doc_list_html += '<li><a class="'+class_name+'" href="'+url_base+'" target="_blank">'+title+'</a></li>';
-		}  
+            switch (index) {
+                
+                case 'pubmed':
+                        for (c in data)
+                        		{
+                        			doc_dict = data[c];
+                        			pmid = doc_dict['pmid'];
+                        			title = doc_dict['title'];
+                        			url_base = "http://ncbi.nlm.nih.gov/pubmed/"+pmid.toString();
+                        			doc_list_html += '<li><a class="'+class_name+'" href="'+url_base+'" target="_blank">'+title+'</a></li>';
+                        		}  
+                break;
+
+                case 'pdb_v2':
+
+                        for (c in data)
+                        		{
+                        			doc_dict = data[c];
+                        			docid = doc_dict['dataItem']['ID'];
+                        			title = doc_dict['dataItem']['title'];
+                        			url_base = "http://www.rcsb.org/pdb/explore/explore.do?structureId="+docid.toString();
+                        			doc_list_html += '<li><a class="'+class_name+'" href="'+url_base+'" target="_blank">'+title+'</a></li>';
+                        		}  
+                break;
+
+            }
+		
 		return doc_list_html;
 	}
 	
 	function update_context_menu(id_list)
 	{
 		id_limit = Math.min(5,id_list.length);
-        final_ids = id_list.slice(0,id_limit);
+           final_ids = id_list.slice(0,id_limit);
 		d_text='Documents Like This';
 		child_menus = [];
 		c
 		$.ajax({
-				  url: "../document_list/",
+				  url: "/"+ index_name + "/document_list/",
 				  method: "POST",
 				  dataType:'json',
-				  data: {'field-type': 'title', 'id-list': JSON.stringify(final_ids)},
+				  data: {'index': index, 'doc_type': doc_type, 'id-list': JSON.stringify(final_ids)},
 				  success: function(data) {
 					  update_html = '<li><b>Documents Associated</b><ul>';
 					  update_html += display_document_list(data, "menu-links");
@@ -191,8 +222,10 @@ $(document).ready(function(){
                     facet_array[value['order']] = farray;
                 });
             var final_html = "";
+            
             $.each(facet_array, function(z,y)
-            {final_html += y.toString()});
+            {
+            final_html += y.toString()});
 		$('#facet-box').html(final_html);
             
     }
@@ -200,7 +233,7 @@ $(document).ready(function(){
      //Function to generate the side menu facets for the search
     function generate_menu_facets(query, facets, dragdrop, pageno, search_type) {
         $.ajax({
-		  url: "../generate_facets/",
+		  url: "/"+ index_name + "/generate_facets/",
 		  method: "POST",
 		  dataType:'json',
 		  data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
@@ -214,7 +247,7 @@ $(document).ready(function(){
      //Function to load relevant facets
     function load_relevent_facets(query, facets, dragdrop, pageno, search_type){
         $.ajax({
-                    	 url: "../relevant_facets/",
+                    	 url: "/"+ index_name + "/relevant_facets/",
                     	 method: "POST",
                     	 dataType:'json',
                          data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
@@ -236,7 +269,7 @@ $(document).ready(function(){
      function load_keyword_cloud(query, facets, dragdrop, pageno, search_type) {
             
                  $.ajax({
-                    	  url: "../keywords/",
+                    	  url: "/"+ index_name + "/keywords/",
                     	  method: "POST",
                     	  dataType:'json',
                          data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
@@ -281,7 +314,7 @@ $(document).ready(function(){
                                                             appendTo: 'body', 
                                                             opacity: 0.7, 
                                                             helper: function(){
-                                                                    //console.log("loging " + $(this).text()); 
+                                                                    
                                                                     return $("<div>"+$(this).text()+"</div>");
                                                                         },
                                                             cursor: "move", 
@@ -340,7 +373,7 @@ $(document).ready(function(){
      //Generate Document graph
     function generate_document_graph(query, facets, dragdrop, pageno, search_type) {
             $.ajax({
-                    	  url: "../document_graph/",
+                    	  url: "/"+ index_name + "/document_graph/",
                     	  method: "POST",
                     	 data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
                          contentType: "application/json; charset=UTF-8",
@@ -438,32 +471,89 @@ $(document).ready(function(){
 			$('#search-count').html(data['total_hits']);
 			$.each(data['results'], function(key,value) {
 				pub = value['_source'];
-				var journal_text = "";
-				 var mesh_text = "MeSH : ";
-					for (i = 0; i < pub['article_type'].length; i++) { 
-									journal_text += pub['article_type'][i].toString() + " | ";
-								}
-					for (i = 0; i < pub['mesh'].length; i++) { 
-									mesh_text += pub['mesh'][i].toString() + " | ";
-								}
-				out_text = "<span class='result-title' data-id='"+key.toString()+"'>" +
-		  "<a class='result-links' target='_blank' href='http://ncbi.nlm.nih.gov/pubmed/"+pub['pmid'].toString()+"'>" + 
-				 "" + pub['title'].toString()+"</a>" +
-		   "</span><br>" + 
-		   "<span class='result-url' data-id='"+key.toString()+"'>"+pub['journal_title'].toString()+". "+pub['year'].toString()+";"+pub['journal_volume'].toString()+"("+pub['journal_issue'].toString()+"):"+pub['journal_page'].toString()+"</span><br>"+
-		  "<span class='result-description' data-id='"+key.toString()+"'>"+pub['abstract'].toString().substring(0,500)+"</span><br>"+
-		  "<span class='result-metadata' data-id='"+key.toString()+"'>PMID:"+pub['pmid'].toString()+" - "+journal_text+"<br>"+mesh_text+"</span>" +
-				 "<br><br>";
-						
-					if ((parseInt(key.toString()) == 1)&&(parseInt(pageno)==1))
-					{
-                         first_text = out_text;
-						$("#top-most").html(first_text);
-					}
-					else {
-							other_text += out_text;
-					}
-				});
+                        
+                    switch (index) {
+                        case 'pubmed':
+                                    var journal_text = "";
+            				 var mesh_text = "MeSH : ";
+            					for (i = 0; i < pub['article_type'].length; i++) { 
+            									journal_text += pub['article_type'][i].toString() + " | ";
+            								}
+            					for (i = 0; i < pub['mesh'].length; i++) { 
+            									mesh_text += pub['mesh'][i].toString() + " | ";
+            								}
+            				out_text = "<span class='result-title' data-id='"+key.toString()+"'>" +
+            		  "<a class='result-links' target='_blank' href='http://ncbi.nlm.nih.gov/pubmed/"+pub['pmid'].toString()+"'>" + 
+            				 "" + pub['title'].toString()+"</a>" +
+            		   "</span><br>" + 
+            		   "<span class='result-url' data-id='"+key.toString()+"'>"+pub['journal_title'].toString()+". "+pub['year'].toString()+";"+pub['journal_volume'].toString()+"("+pub['journal_issue'].toString()+"):"+pub['journal_page'].toString()+"</span><br>"+
+            		  "<span class='result-description' data-id='"+key.toString()+"'>"+pub['abstract'].toString().substring(0,500)+"</span><br>"+
+            		  "<span class='result-metadata' data-id='"+key.toString()+"'>PMID:"+pub['pmid'].toString()+" - "+journal_text+"<br>"+mesh_text+"</span>" +
+            				 "<br><br>";
+            						
+            					
+                            break;
+                        case 'pdb_v2':
+                                    
+                                    var organism_text = "";
+            				 var key_text = "Keywords : ";
+                                    var material_text = "Materials : ";
+                                       if (typeof  pub['organism'] !== 'undefined')
+            					{ 
+                                        if (typeof pub['organism']['host'] !== 'undefined' && pub['organism']['host'].length > 0) {
+                                                   for (i = 0; i < pub['organism']['host'].length; i++) { 
+                                                              if (typeof pub['organism']['host'][i]['genus'] !== 'undefined')
+                                                                        {organism_text += pub['organism']['host'][i]['genus'].toString() + " | "; }
+            								}
+                                                }
+                                        
+                                        if (typeof pub['organism']['source'] !== 'undefined' && pub['organism']['source'].length > 0) {
+                                                   for (i = 0; i < pub['organism']['source'].length; i++) { 
+                                                            if (typeof pub['organism']['source'][i]['genus'] !== 'undefined')
+            									{organism_text += pub['organism']['source'][i]['genus'].toString() + " | ";}
+            								}
+                                                }
+                                        }
+
+                                        if (typeof pub['dataItem']['keywords'] !== 'undefined' && pub['dataItem']['keywords'].length > 0) {
+                                                   for (i = 0; i < pub['dataItem']['keywords'].length; i++) { 
+            									key_text += pub['dataItem']['keywords'][i].toString() + " | ";
+            								}
+                                                }
+            					
+                                        if (typeof pub['materialEntity'] !== 'undefined' && pub['materialEntity'].length > 0) {
+                                                   for (i = 0; i < pub['materialEntity'].length; i++) { 
+            									material_text += pub['materialEntity'][i]['name'].toString() + " | ";
+            								}
+                                                }
+                                        
+            				out_text = "<span class='result-title' data-id='"+key.toString()+"'>" +
+                                    		  "<a class='result-links' target='_blank' href='http://www.rcsb.org/pdb/explore/explore.do?structureId="+pub['dataItem']['ID'].toString()+"'>" + 
+                                    				 "" + pub['dataItem']['title'].toString()+"</a>" +
+                                    		   "</span><br>" + 
+                                                 "<span class='result-description'>"+pub['dataItem']['description'].toString().substring(0,500)+"</span><br>"+
+                                                    "<div class='result-subbox'><a class='result-sublinks' target='_blank' href='http://ncbi.nlm.nih.gov/pubmed/"+pub['citation']['PMID']+"'>" + 
+                                				 "" + pub['citation']['title'].toString()+"</a><br>" +
+                                    		   "<span class='result-url' data-id='"+key.toString()+"'>"+pub['citation']['journal']+". "+pub['citation']['year']+"; pages: ";
+                                                if (typeof pub['citation']['firstPage'] !== 'undefined') 
+                                                     {out_text += pub['citation']['firstPage'].toString()+"-"}
+                                                if (typeof pub['citation']['lastPage'] !== 'undefined') 
+                                                     {out_text += "-"+pub['citation']['lastPage'].toString()}
+                                    out_text += "</span></div>"+
+                                    		  "<span class='result-metadata' data-id='"+key.toString()+"'>ID:"+pub['dataItem']['ID'].toString()+" - "+organism_text+"<br>"+key_text+"<br>"+material_text+"<br>"+"</span>" +
+                                    				 "<br><br>";
+
+                            break;
+                    }
+				if ((parseInt(key.toString()) == 1)&&(parseInt(pageno)==1))
+            					{
+                                     first_text = out_text;
+            						$("#top-most").html(first_text);
+            					}
+            					else {
+            							other_text += out_text;
+            					}
+            				});
 			$('#other-results').html(other_text);
 			generate_pages(data['total_hits'], data['pageno']);
 	 }
@@ -486,7 +576,8 @@ $(document).ready(function(){
 			query = $("#document-search").attr('data-value');
 		}
         $.ajax({
-                    	  url: "../search_query/",
+                    	  url: "/"+ index_name + "/search_query/",
+                         //url: "/search_query/",
                     	  method: "POST",
                     	  dataType:'json',
                          data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
@@ -506,7 +597,7 @@ $(document).ready(function(){
 	function goto_page(query, facets, dragdrop, pageno, search_type){
 		$('#other-results').html(show_loading());
 		$.ajax({
-                    	  url: "../search_query/",
+                    	  url: "/"+ index_name + "/search_query/",
                     	  method: "POST",
                     	  dataType:'json',
                          data:  JSON.stringify(get_send_data(query, facets, dragdrop, pageno, search_type)),
@@ -600,15 +691,15 @@ $(document).ready(function(){
 		$('#search-drop').html("");
 		doc_list_display = '';
 		$.ajax({
-                	  url: "../document_list/",
+                	  url: "/"+ index_name + "/document_list/",
                 	  method: "POST",
                 	  dataType:'json',
-                	  data: {'field-type': 'title', 'id-list': final_ids},
+                	  data: {'index': index, 'doc_type': doc_type, 'field-type': 'title', 'id-list': final_ids},
                 	  success: function(data) {
 								doc_list_display = '<ul class="search-doc-list">'
 								doc_list_display += display_document_list(data, "search-doc-links");
 								doc_list_display += '</ul>';
-                             console.log(doc_list_display); 
+                             
 							$("#document-search-indication").html("<p>You are viewing results of documents like search based on: "+doc_list_display);
 						},
                   });  
@@ -680,44 +771,63 @@ $(document).ready(function(){
 				],
 			beforeOpen: function(event, ui) {
 						$target = ui.target;
-						console.log("opening");
+						
 						id_list = $target.attr("data-elems").split(",");
 						id_limit = Math.min(5,id_list.length);
 						final_ids = id_list.slice(0,id_limit);
 						var doc_ids = JSON.stringify(final_ids);
 						$.ajax({
-								  url: "../document_list/",
+								  url: "/"+ index_name + "/document_list/",
 								  method: "POST",
 								  dataType:'json',
-								  data: {'field-type': 'title', 'id-list': doc_ids},
+								  data: {'index': index, 'doc_type': doc_type, 'field-type': 'title', 'id-list': doc_ids},
 								  success: function(data) {
 									  child_docs = []
-									  for (c in data)
-											{
-												var child_item = new Object();
-												doc_dict = data[c];
-												pmid = doc_dict['pmid'];
-												title = doc_dict['title'];
-												url_base = "http://ncbi.nlm.nih.gov/pubmed/"+pmid.toString();
-												child_item.title='<a class="menu-links" href="'+url_base+'" target="_blank">'+title+'</a>';
-												child_docs.push(child_item);
-											}  	
+                                                        switch (index) {
+                
+                                                                case 'pubmed':
+                                                                        for (c in data)
+                                                                        		{
+                                                                                     var child_item = new Object();       
+                                                                        			doc_dict = data[c];
+                                                                        			pmid = doc_dict['pmid'];
+                                                                        			title = doc_dict['title'];
+                                                                        			url_base = "http://ncbi.nlm.nih.gov/pubmed/"+pmid.toString();
+                                                                        			child_item.title='<a class="menu-links" href="'+url_base+'" target="_blank">'+title+'</a>';
+                                                                                      child_docs.push(child_item);
+                                                                        		}  
+                                                                break;
+                                                
+                                                                case 'pdb_v2':
+                                                
+                                                                        for (c in data)
+                                                                        		{
+                                                                                     var child_item = new Object();
+                                                                        			doc_dict = data[c];
+                                                                        			docid = doc_dict['dataItem']['ID'];
+                                                                        			title = doc_dict['dataItem']['title'];
+                                                                        			url_base = "http://www.rcsb.org/pdb/explore/explore.do?structureId="+docid.toString();
+                                                                        			child_item.title='<a class="menu-links" href="'+url_base+'" target="_blank">'+title+'</a>';
+                                                                            		child_docs.push(child_item);
+                                                                                    }  
+                                                                break;
+                                                
+                                                            } 	
 									  $(document).contextmenu("setEntry", "dlist", {title: "Documents Associated", children: child_docs});
 								  }
 						});
 					},
 			select: function (event, ui) {
-				console.log("Selected");
+				
 				$target = ui.target;
-				console.log(ui.cmd);
-				console.log(ui.target);
+				
 				if (ui.cmd == 'dlt')
 				{
 					id_list = $target.attr("data-elems").split(",");
 					id_limit = Math.min(5,id_list.length);
 					final_ids = id_list.slice(0,id_limit);
 					var doc_ids = JSON.stringify(final_ids);
-					console.log(doc_ids);
+					
 					documents_like_this(doc_ids);
 				}
 			}
