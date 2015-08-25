@@ -26,7 +26,7 @@ This is the DELVE component (Visualization part) of the project.
   - One "string" type with "term_vector" : "with_position_offsets" - usually a field that has maxium text or create a field with merging multiple small fields. This is required for document graph generation
   - Facets must be "string" type with "index" : "not_analyzed"
   - Year / Date fields must not be "string" type. Use appropriate "date" format from elasticsearch
-  - "store" : "true" must be set for all fields, as the interface displays text directly from the elasticsearch (instead of querying a sepearate database)
+  - "store" : "true" must be set for all fields, as the interface displays text directly from the elasticsearch (instead of querying a separate database)
 
 # Implementation - Things to do
 
