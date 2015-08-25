@@ -483,7 +483,7 @@ def send_keywords(request, index):
                         aitem = pitem['_source'][doc_ids['main']][doc_ids['sub']]
                     docid_list.append(aitem)
                 
-                response_dict.append({'field': "abstract", 'type': "terms", 'key_name': b_key, 'text': b_key, 'size': ((b_score/max_score)*(48-12)) + 12, 'ids' : docid_list})
+                response_dict.append({'field': get_kw_field(index,doc_type), 'type': "terms", 'key_name': b_key, 'text': b_key, 'size': ((b_score/max_score)*(48-12)) + 12, 'ids' : docid_list})
                 i += 1
         return JsonResponse(response_dict,safe=False)
 
