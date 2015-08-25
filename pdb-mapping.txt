@@ -1,0 +1,188 @@
+{
+  "pdb_v2" : {
+    "mappings" : {
+      "pdb2" : {
+        "properties" : {
+          "citation" : {
+            "properties" : {
+              "DOI" : {
+                "type" : "string",
+                "store" : true
+              },
+              "author" : {
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "firstPage" : {
+                "type" : "string",
+                "store" : true
+              },
+              "journal" : {
+                "type" : "string",
+                "index" : "not_analyzed",
+                "store" : true
+              },
+              "journalISSN" : {
+                "type" : "string",
+                "store" : true
+              },
+              "lastPage" : {
+                "type" : "string",
+                "store" : true
+              },
+              "title" : {
+                "type" : "string",
+                "store" : true,
+                "term_vector" : "with_positions_offsets"
+              },
+              "year" : {
+                "type" : "date",
+                "store" : true,
+                "format" : "YYYY"
+              }
+            }
+          },
+          "dataItem" : {
+            "properties" : {
+              "ID" : {
+                "type" : "string",
+                "store" : true
+              },
+              "dataTypes" : {
+                "type" : "string",
+                "store" : true
+              },
+              "depositionDate" : {
+                "type" : "date",
+                "store" : true,
+                "format" : "dateOptionalTime"
+              },
+              "description" : {
+                "type" : "string",
+                "store" : true,
+                "term_vector" : "with_positions_offsets"
+              },
+              "keywords" : {
+                "type" : "string",
+                "index" : "not_analyzed",
+                "store" : true
+              },
+              "releaseDate" : {
+                "type" : "date",
+                "store" : true,
+                "format" : "dateOptionalTime"
+              },
+              "title" : {
+                "type" : "string",
+                "store" : true,
+                "term_vector" : "with_positions_offsets"
+              }
+            }
+          },
+          "dataResource" : {
+            "properties" : {
+              "altNames" : {
+                "type" : "string",
+                "store" : true
+              },
+              "description" : {
+                "type" : "string",
+                "store" : true,
+                "term_vector" : "with_positions_offsets"
+              },
+              "freeText" : {
+                "type" : "string",
+                "store" : true,
+                "term_vector" : "with_positions_offsets"
+              },
+              "keywords" : {
+                "type" : "string",
+                "index" : "not_analyzed",
+                "store" : true
+              },
+              "name" : {
+                "type" : "string",
+                "store" : true
+              },
+              "url" : {
+                "type" : "string",
+                "store" : true
+              }
+            }
+          },
+          "identifiers" : {
+            "properties" : {
+              "ID" : {
+                "type" : "string",
+                "store" : true
+              }
+            }
+          },
+          "materialEntity" : {
+            "properties" : {
+              "formula" : {
+                "type" : "string",
+                "store" : true
+              },
+              "name" : {
+                "type" : "string",
+                "store" : true
+              },
+              "role" : {
+                "type" : "string",
+                "store" : true
+              },
+              "type" : {
+                "type" : "string",
+                "store" : true
+              },
+              "weight" : {
+                "type" : "string",
+                "store" : true
+              }
+            }
+          },
+          "organism" : {
+            "properties" : {
+              "host" : {
+                "properties" : {
+                  "genus" : {
+                    "type" : "string",
+                    "store" : true
+                  },
+                  "species" : {
+                    "type" : "string",
+                    "store" : true
+                  },
+                  "strain" : {
+                    "type" : "string",
+                    "store" : true
+                  }
+                }
+              },
+              "source" : {
+                "properties" : {
+                  "genus" : {
+                    "type" : "string",
+                    "store" : true
+                  },
+                  "species" : {
+                    "type" : "string",
+                    "store" : true
+                  },
+                  "strain" : {
+                    "type" : "string",
+                    "store" : true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
