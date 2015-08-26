@@ -794,7 +794,10 @@ $(document).ready(function(){
                                                                         			title = doc_dict['title'];
                                                                         			url_base = "http://ncbi.nlm.nih.gov/pubmed/"+pmid.toString();
                                                                         			child_item.title='<a class="menu-links" href="'+url_base+'" target="_blank">'+title+'</a>';
-                                                                                      child_docs.push(child_item);
+																					child_item.cmd = 'link';
+																				    child_item.data = new Object();
+																				    child_item.data.link = url_base;
+                                                                                    child_docs.push(child_item);
                                                                         		}  
                                                                 break;
                                                 
@@ -808,6 +811,9 @@ $(document).ready(function(){
                                                                         			title = doc_dict['dataItem']['title'];
                                                                         			url_base = "http://www.rcsb.org/pdb/explore/explore.do?structureId="+docid.toString();
                                                                         			child_item.title='<a class="menu-links" href="'+url_base+'" target="_blank">'+title+'</a>';
+																					child_item.cmd = 'link';
+																				    child_item.data = new Object();
+																				    child_item.data.link = url_base;
                                                                             		child_docs.push(child_item);
                                                                                     }  
                                                                 break;
@@ -827,8 +833,14 @@ $(document).ready(function(){
 					id_limit = Math.min(5,id_list.length);
 					final_ids = id_list.slice(0,id_limit);
 					var doc_ids = JSON.stringify(final_ids);
-					
 					documents_like_this(doc_ids);
+				}
+				
+				if (ui.cmd == 'link')
+				{
+					$link=ui.item.data();
+					$url=$link.link;
+					window.open($url, '_blank');
 				}
 			}
 		});
