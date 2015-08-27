@@ -13,7 +13,7 @@ def index(request, index_name):
     return render(request, "design.html", {})
     
 def generate_elastic(index):
-    esnodes = {'pubmed':{'host': '10.0.0.10', 'port': 9200}, 'pdb_v2': {'host': '129.106.149.72', 'port': 9200}}
+    esnodes = {'pubmed':{'host': '127.0.0.1', 'port': 9200}, 'pdb_v2': {'host': '129.106.149.72', 'port': 9200}}
     es = Elasticsearch([esnodes[index]], timeout=600, index=index)
     return es
 

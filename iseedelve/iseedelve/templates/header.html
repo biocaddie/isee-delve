@@ -5,7 +5,7 @@
 	</div>
 	<div id="title-box">
 		<h2>iSEE-DELVE</h2>
-		An interactive search..
+		Search Visualization for Big Data
 	</div>
 	<!-- Search Box -->
 	<div id="search-box">
@@ -14,8 +14,13 @@
 				<div>
 					<input type="text" id="search-field" data-value="" name="search-text"> &nbsp;&nbsp;
 					<button id="search-button" name="search-submit" value="Search">Search</button>
-                    <input type="hidden" id="document-search" data-value="" name="document-search" value="1">
+                            <input type="hidden" id="document-search" data-value="" name="document-search" value="1">
 				</div>
+                       <br>
+                       <div>
+                         Use <b>" "</b> for phrase / exact match search, Use <b>*</b> at the end for prefix search <br>
+                         Use <b> AND </b>, <b> OR </b>, <b> NOT </b> for boolean search and use <b>( ) </b> for precendence <br><br>
+                       </div>
 				<!-- Javascript loaded search suggestions -->
 				<div id="search-suggestions">
 				</div>
