@@ -465,17 +465,30 @@ The design is for minimum 1366 x 768
     font-family: "Arial,Helvetica";
     font-size:"15px";
     font-weight="bold";
+    cursor: pointer;
 }
 
 /*Item Context*/
 
-.ui-state-focus {margin: inherit !important}
+
+
 .ui-menu {
      max-width: 600px;
-     min-width: 400px; 
+     min-width: 200px; 
      color:#000000;
-      background-color: #FFFFFF;
+     background-color: #FFFFFF;
     }
+
+/*Overriding jquery-ui.css instead of editing the file*/
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+      margin: inherit !important;  
+}
+
 
 #item-context {
     background:white;
