@@ -479,6 +479,10 @@ The design is for minimum 1366 x 768
      background-color: #FFFFFF;
     }
 
+.ui-menu > li > ul > li {
+    min-width: 400px; 
+}
+
 /*Overriding jquery-ui.css instead of editing the file*/
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,

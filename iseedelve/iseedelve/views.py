@@ -251,7 +251,7 @@ def generate_document_graph(response_dict):
         i = 0
         for key, value in screen_matrix.items():
             svg += '<circle class="cresult cdefault hasmenu" id="g'+str(i+1)+'" data-elems="'+",".join(value)+'" stroke-alignment="inner" cx="'+str(key[0])+'" cy="'+str(key[1])+'" r="'+str(oradius)+'"></circle>'
-            svg += '<text x="'+str(key[0]-5)+'" y="'+str(key[1]+5)+'" class="ctext">'+str(len(value))+'</text>'
+            svg += '<text class="ctext hasmenu" data-elems="'+",".join(value)+'" x="'+str(key[0]-5)+'" y="'+str(key[1]+5)+'">'+str(len(value))+'</text>'
             i += 1
             
         svg += '</svg>'
