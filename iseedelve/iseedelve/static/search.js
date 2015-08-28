@@ -378,7 +378,62 @@ $(document).ready(function(){
 				});
 			}
 
-    
+    //Click function for document graph
+	function click_document(item) {
+                dItem = d3.select(item);
+                dId = dItem.attr('id');
+                type_id = dId.substring(0,1);
+                selector = dId;
+                if (type_id == "t")
+                {
+                    selector = "#g"+dId.substring(1);
+                    dItem = d3.select(selector);
+                }
+                
+                dItem = d3.select("body").select("#document-cluster").select("#svg-obj").select(selector);
+                var key_list;
+    			d3.selectAll(".facetitem").classed("facetselect", false);
+    			d3.selectAll(".facetitem").classed("facethighlight", false);
+    			d3.selectAll(".keyitem").classed("keyhighlight", false);
+    			d3.selectAll(".keyitem").classed("keyselect", false);
+    			d3.selectAll(".cresult").classed("chighlight", false);
+    			if (d3.event.ctrlKey || d3.event.metaKey) {
+                dItem.classed("cselect", ! dItem.classed("cselect"));
+    				dItem.classed("cdefault", ! dItem.classed("cdefault"));
+    				key_list = dItem.attr('data-elems').split(",");
+    					
+    					  for (i = 0; i < key_list.length; i++) 
+    					  {
+    						  highlight_filters(key_list[i]);
+    						  highlight_keywords(key_list[i]);
+    					  }
+                }
+    			else
+    				{
+    					if (dItem.classed("cselect"))
+    					{
+    						d3.selectAll(".cresult").classed("cselect", false);
+    						d3.selectAll(".cresult").classed("cdefault", true);
+    					}
+    					else
+    					{
+    						d3.selectAll(".cresult").classed("cselect", false);
+    						d3.selectAll(".cresult").classed("cdefault", true);
+    						dItem.classed("cdefault", false);
+    						dItem.classed("cselect", true);
+    						key_list = dItem.attr('data-elems').split(",");
+    					
+    						  for (i = 0; i < key_list.length; i++) 
+    						  {
+    							  highlight_filters(key_list[i]);
+    							  highlight_keywords(key_list[i]);
+    						  }
+    					}
+    					 
+    				}
+
+    }
+	
      //Generate Document graph
     function generate_document_graph(query, facets, dragdrop, pageno, search_type) {
             $.ajax({
@@ -388,49 +443,12 @@ $(document).ready(function(){
                          contentType: "application/json; charset=UTF-8",
                     	 success: function(data) {
                             $("#document-graph").html(data);
-                                d3.select("body").select("#document-cluster").select("#svg-obj").selectAll(".cresult").on("click", function() {
-                			var key_list;
-                			d3.selectAll(".facetitem").classed("facetselect", false);
-                			d3.selectAll(".facetitem").classed("facethighlight", false);
-                			d3.selectAll(".keyitem").classed("keyhighlight", false);
-                			d3.selectAll(".keyitem").classed("keyselect", false);
-                			d3.selectAll(".cresult").classed("chighlight", false);
-                			if (d3.event.ctrlKey || d3.event.metaKey) {
-                                d3.select(this).classed("cselect", ! d3.select(this).classed("cselect"));
-                				d3.select(this).classed("cdefault", ! d3.select(this).classed("cdefault"));
-                				key_list = d3.select(this).attr('data-elems').split(",");
-                					
-                					  for (i = 0; i < key_list.length; i++) 
-                					  {
-                						  highlight_filters(key_list[i]);
-                						  highlight_keywords(key_list[i]);
-                					  }
-                                }
-                			else
-                				{
-                					if (d3.select(this).classed("cselect"))
-                					{
-                						d3.selectAll(".cresult").classed("cselect", false);
-                						d3.selectAll(".cresult").classed("cdefault", true);
-                					}
-                					else
-                					{
-                						d3.selectAll(".cresult").classed("cselect", false);
-                						d3.selectAll(".cresult").classed("cdefault", true);
-                						d3.select(this).classed("cdefault", false);
-                						d3.select(this).classed("cselect", true);
-                						key_list = d3.select(this).attr('data-elems').split(",");
-                					
-                						  for (i = 0; i < key_list.length; i++) 
-                						  {
-                							  highlight_filters(key_list[i]);
-                							  highlight_keywords(key_list[i]);
-                						  }
-                					}
-                					 
-                				}
-                
-                    		});
+                            d3.select("body").select("#document-cluster").select("#svg-obj").selectAll(".cresult").on("click", function () {
+                                    click_document(this);
+                                });
+                            d3.select("body").select("#document-cluster").select("#svg-obj").selectAll(".ctext").on("click", function () {
+                                    click_document(this);
+                                });
 
                         }
                 });
