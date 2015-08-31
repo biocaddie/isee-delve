@@ -382,14 +382,7 @@ $(document).ready(function(){
 	function click_document(item) {
                 dItem = d3.select(item);
                 dId = dItem.attr('id');
-                type_id = dId.substring(0,1);
-                selector = dId;
-                if (type_id == "t")
-                {
-                    selector = "#g"+dId.substring(1);
-                    dItem = d3.select(selector);
-                }
-                
+                selector = "#g"+dId.substring(1);
                 dItem = d3.select("body").select("#document-cluster").select("#svg-obj").select(selector);
                 var key_list;
     			d3.selectAll(".facetitem").classed("facetselect", false);
