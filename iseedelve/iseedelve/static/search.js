@@ -558,7 +558,7 @@ $(document).ready(function(){
 											}
 											else if (typeof pub['citation']['DOI'] !== 'undefined')
 											{
-												citation_url = "href='http://dx.doi.org/"+pub['citation']['DOI']+"'";
+												citation_url = "href='https://doi.org/"+pub['citation']['DOI']+"'";
 											}
 											else
 											{
